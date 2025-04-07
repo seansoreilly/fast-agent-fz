@@ -1,0 +1,26 @@
+# FastAgent Configuration File for AWS Deployment
+
+# Default Model Configuration:
+default_model: haiku
+
+# Logging Configuration:
+logger:
+    type: "console"
+    progress_display: true
+    show_chat: true
+    show_tools: true
+    truncate_tools: true
+
+# MCP Servers
+mcp:
+    servers:
+        fetch:
+            command: "uvx"
+            args: ["mcp-server-fetch"]
+        filesystem:
+            command: "npx"
+            args: ["-y", "@modelcontextprotocol/server-filesystem", "."]
+        fatzebra:
+            # For ECS deployment, we can use service discovery
+            command: "node"
+            args: ["/app/mcp-fat-zebra/dist/index.js"]
