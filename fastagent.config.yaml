@@ -38,5 +38,4 @@ mcp:
             command: "npx"
             args: ["-y", "@modelcontextprotocol/server-filesystem", "."]
         fatzebra:
-            command: "node"
-            args: ["C:/projects/mcp-fat-zebra/dist/index.js"]
+            url: "http://mcp-nginx/mcp"
