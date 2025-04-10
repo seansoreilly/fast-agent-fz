@@ -14,7 +14,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
 
 ## Implementation Steps
 
-### ✅ 1. Environment Setup
+### Phase 1: Environment Setup ✅
 
 - ✅ Install Gradio and required dependencies:
   ```bash
@@ -28,7 +28,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
   - `install_gradio.ps1` for Windows
   - `install_gradio.sh` for Unix-based systems
 
-### 2. Basic Chat Interface Implementation
+### Phase 2: Basic Chat Interface Implementation
 
 - Create a new file `gradio_app.py` in the project root with the following structure:
 
@@ -69,7 +69,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
       demo.launch(server_name="0.0.0.0", server_port=7860)
   ```
 
-### 3. Adapt Fat Zebra Agent for Gradio
+### Phase 3: Adapt Fat Zebra Agent for Gradio
 
 - Modify `agent.py` to include a function for generating responses within an existing agent session:
 
@@ -103,7 +103,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
       asyncio.run(main())
   ```
 
-### 4. Enhanced UI Features
+### Phase 4: Enhanced UI Features
 
 - Add payment-specific UI components in `gradio_app.py`:
 
@@ -182,7 +182,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
       demo.launch(server_name="0.0.0.0", server_port=7860)
   ```
 
-### 5. Response Streaming Implementation
+### Phase 5: Response Streaming Implementation
 
 - Implement streaming responses for a better user experience:
 
@@ -204,7 +204,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
   )
   ```
 
-### 6. Integration Testing
+### Phase 6: Integration Testing
 
 - Test the Gradio UI with various Fat Zebra API queries:
   - Card processing scenarios
@@ -213,7 +213,7 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
   - Error handling cases
 - Verify that all MCP servers are correctly accessed through the new interface
 
-### 7. Deployment Updates
+### Phase 7: Deployment Updates
 
 - Update the project README.md with new launching instructions
 - Create a simple startup script for the Gradio interface:
@@ -240,12 +240,12 @@ This plan outlines the steps to implement a Gradio-based chat interface for the 
 
 ## Timeline
 
-1. **Environment Setup & Basic Integration**: 1 day
-2. **Core Chat Functionality**: 2 days
-3. **Enhanced UI Features**: 2 days
-4. **Streaming & Response Formatting**: 1 day
-5. **Testing & Bug Fixes**: 2 days
-6. **Documentation & Deployment**: 1 day
+1. **Phase 1 - Environment Setup**: 1 day
+2. **Phase 2 & 3 - Core Chat Functionality**: 2 days
+3. **Phase 4 - Enhanced UI Features**: 2 days
+4. **Phase 5 - Streaming & Response Formatting**: 1 day
+5. **Phase 6 - Testing & Bug Fixes**: 2 days
+6. **Phase 7 - Documentation & Deployment**: 1 day
 
 **Total Estimated Time**: 9 days
 
