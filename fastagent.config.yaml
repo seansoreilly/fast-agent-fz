@@ -24,4 +24,4 @@ mcp:
       args: ["mcp-server-fetch"]
     fatzebra:
       command: "node"
-      args: ["mcp-fat-zebra/dist/index.js"]
+      args: ["../mcp-fat-zebra/dist/index.js"]
