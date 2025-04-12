@@ -24,4 +24,9 @@ demo = gr.ChatInterface(
 )
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860) 
+    demo.launch(
+        server_name="0.0.0.0",
+        server_port=7860,
+        pwa=True,
+        show_error=True,
+        favicon_path="static/5f03e4e6c8c68511212f0c40_FZ_Favicon_32x32.png")
