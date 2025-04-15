@@ -33,6 +33,7 @@ if __name__ == "__main__":
         server_port=7860,
         pwa=True,
         show_error=True,
+        share=True,
         favicon_path="static/5f03e4e6c8c68511212f0c40_FZ_Favicon_32x32.png",
         app_kwargs={
             "head_html": """
