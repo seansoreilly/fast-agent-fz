@@ -14,7 +14,7 @@ async def generate_response(agent, message):
     return response
 
 # Define the agent
-@fast.agent(instruction="Assist with any queries regarding the Fat Zebra API", servers=["fetch","filesystem","fatzebra"])
+@fast.agent(instruction="Assist with any queries regarding the Fat Zebra API", servers=["fatzebra"])
 async def main():
     """Run the Fat Zebra AI agent in an async context."""
     # use the --model command line switch or agent arguments to change model
