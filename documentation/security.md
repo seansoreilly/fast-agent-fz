@@ -4,21 +4,28 @@ This section covers security aspects related to integrating with Fat Zebra, part
 
 ## Overview
 
-_(General security best practices mentioned in the 'Security > Overview' page should be summarized here)_
+_(Verify details against official 'Security > Overview' documentation)_
 
-Fat Zebra prioritizes security. Integrators should also follow best practices to protect sensitive data.
+Security is a shared responsibility. Fat Zebra provides secure infrastructure, but you must also secure your integration and systems.
+
+- **HTTPS:** All API communication MUST occur over HTTPS (TLS 1.2 or higher recommended).
+- **API Credentials:** Keep your API Username and Token confidential. Do not embed them directly in client-side code. Use secure server-side storage.
+- **Webhook Validation:** Always validate incoming webhooks using the provided signature and secret. _(See [Webhooks](./webhooks.md#handling-webhooks))_
+- **PCI DSS:** Understand your PCI DSS compliance requirements based on your integration method (see below).
+- **Data Minimization:** Only collect and store the cardholder data necessary for your processing needs.
 
 ## PCI Certification & Compliance
 
-_(Details about Fat Zebra's PCI status and integrator responsibilities need to be extracted from 'PCI Certification' and 'What is PCI Compliance' pages)_
+_(Verify details against official 'PCI Certification' and 'What is PCI Compliance' documentation)_
 
-- **Fat Zebra's Status:** Fat Zebra is a PCI DSS Level 1 Service Provider. _(Confirm level)_
-- **What is PCI DSS:** The Payment Card Industry Data Security Standard (PCI DSS) is a set of security standards designed to ensure that all companies that accept, process, store or transmit credit card information maintain a secure environment.
-- **Your Responsibility:** Your PCI DSS compliance requirements depend heavily on your integration method.
-  _ **Using Hosted Solutions/SDKs:** Integrations using Fat Zebra's hosted payment pages, JavaScript SDK, or Mobile SDKs significantly reduce your PCI scope, as sensitive cardholder data (PAN, CVV) is typically sent directly from the cardholder's browser/device to Fat Zebra, bypassing your servers.
-  You may only need to complete a Self-Assessment Questionnaire (SAQ) A or SAQ A-EP.
-  _ **Direct API Integration (Handling PAN):** If your servers directly receive or transmit raw card numbers (PAN), your PCI compliance scope is much larger, likely requiring SAQ D. \* **Tokenization:** Using Fat Zebra's tokenization ([Card On File](./card-on-file.md)) is crucial for reducing scope if you need to store payment details for recurring billing or repeat customers.
-- **Recommendation:** Always aim to minimize your PCI scope by avoiding direct handling of sensitive card data whenever possible. Utilize Fat Zebra's tokenization, hosted fields, or SDKs.
+- **Fat Zebra's Status:** Fat Zebra is certified as a **PCI DSS Level 1 Service Provider**, the highest level of compliance.
+- **What is PCI DSS:** The Payment Card Industry Data Security Standard is a global standard with technical and operational requirements for protecting cardholder data. Compliance is mandatory for all entities that store, process, or transmit cardholder data.
+- **Your Responsibility & SAQ Type:** Your specific compliance requirements, and the Self-Assessment Questionnaire (SAQ) you need to complete, depend on how you handle cardholder data:
+  - **SAQ A:** Applies if you fully outsource all cardholder data functions to Fat Zebra, and your website only contains a redirect/link to Fat Zebra's hosted payment page (HPP). Card data never touches your systems.
+  - **SAQ A-EP:** Applies if your website doesn't directly handle card data, but it **does affect the security** of the transaction (e.g., you provide the checkout page where Fat Zebra's JS SDK or iframe elements are embedded). This is common when using client-side tokenization via SDKs.
+  - **SAQ D (Merchants & Service Providers):** Applies if your systems **store, process, or transmit** cardholder data (PAN, CVV, etc.). This includes server-to-server API integrations where you send raw card details from your backend to Fat Zebra. This SAQ has the most extensive requirements.
+  - **Tokenization Impact:** Using Fat Zebra's [tokenization](./card-on-file.md) via client-side SDKs (typically SAQ A-EP) or receiving tokens back from purchases is crucial for **reducing your PCI scope**. Storing only tokens (and not PANs) significantly simplifies compliance compared to SAQ D.
+- **Recommendation:** Minimize your PCI scope by using Fat Zebra's hosted solutions (HPP) or client-side SDKs ([JS](./sdk.md#javascript-sdk), [React](./sdk.md#react-sdk)) whenever possible. Avoid letting raw cardholder data touch your server environment.
 
 ## PGP Key
 

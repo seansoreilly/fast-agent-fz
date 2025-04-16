@@ -41,8 +41,4 @@ _(Definitions need to be extracted from the 'Glossary' page content for Fat Zebr
 - **MOTO (Mail Order / Telephone Order):**
   - Transactions initiated remotely via mail or telephone where the card is not physically present.
 
-_... (Add more terms as found on the Glossary page)_
-
----
-
 _See also: [Getting Started](./getting-started.md)_
