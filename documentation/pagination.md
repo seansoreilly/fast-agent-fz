@@ -4,38 +4,37 @@ This section describes how pagination is handled for API endpoints that return l
 
 ## Requesting Pages
 
-_(Specific query parameters used for pagination need to be extracted from the 'Pagination' page)_
+To control pagination, use the following standard query parameters:
 
-- **Page Parameter:** `(e.g., page=2)` - Specifies the page number to retrieve (usually 1-indexed).
-- **Size/Limit Parameter:** `(e.g., per_page=50)` - Specifies the number of items to return per page.
+- **`page`:** (Integer, Optional, Default: 1) Specifies the page number to retrieve. The first page is `1`.
+- **`per_page`:** (Integer, Optional, Default: 25, Max: 100) Specifies the maximum number of items to return per page.
 
 **Example Request:**
 
-```
+Retrieve the third page of purchases, with 20 items per page:
+
+```http
 GET /v1.0/purchases?page=3&per_page=20
 Host: gateway.fatzebra.com.au
-Authorization: Basic ...
+Authorization: Basic YOUR_USERNAME:YOUR_TOKEN
 Accept: application/json
 ```
 
 ## Reading Pagination Info from Responses
 
-_(Specific response headers or fields indicating pagination status need to be extracted from the 'Pagination' page)_
+Responses for endpoints that support pagination include a `pagination` object within the JSON body. This object contains metadata about the result set.
 
-Responses for paginated endpoints typically include information to navigate through the result set.
+- **`total_entries`:** (Integer) The total number of resources available across all pages for the given query.
+- **`total_pages`:** (Integer) The total number of pages available.
+- **`current_page`:** (Integer) The page number that was returned in this response.
+- **`per_page`:** (Integer) The number of items requested per page.
 
-- **Total Count:** May be provided in a header `(e.g., X-Total-Count)` or within the JSON body `(e.g., "pagination": {"total_entries": 123})`.
-- **Total Pages:** May be provided in a header `(e.g., X-Total-Pages)` or within the JSON body `(e.g., "pagination": {"total_pages": 7})`.
-- **Current Page:** Often indicated in the JSON body `(e.g., "pagination": {"current_page": 3})`.
-- **Next/Previous Links:** Some APIs provide direct URLs for the next and previous pages in `Link` headers or within the JSON body.
-
-**Example Response Snippet (Illustrative):**
+**Example Response Snippet:**
 
 ```json
 {
   "purchases": [
-    {...},
-    {...}
+    // ... 20 purchase objects ...
   ],
   "pagination": {
     "total_entries": 123,
@@ -45,6 +44,8 @@ Responses for paginated endpoints typically include information to navigate thro
   }
 }
 ```
+
+**Note:** Check the `total_pages` value to determine if more pages are available. Iterate by incrementing the `page` parameter in subsequent requests until `current_page` equals `total_pages`.
 
 ---
 

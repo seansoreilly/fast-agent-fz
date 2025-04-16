@@ -4,19 +4,27 @@ This section describes the specification for uploading persisted invoices to Fat
 
 ## Overview
 
-_(Purpose and use case for persisted invoices need to be extracted)_
+_(Verify purpose against official documentation)_
 
-Persisted invoices allow merchants to upload invoice data to Fat Zebra, potentially for linking with transactions or for presentment purposes.
+This feature likely allows merchants to upload detailed invoice information to Fat Zebra. Potential use cases include:
+
+- **Linking Payments:** Associating specific payments (e.g., Purchases, Direct Debits) with detailed invoice records stored within Fat Zebra.
+- **Hosted Invoice Presentment:** Fat Zebra might offer a service to display these invoices to customers, potentially with a payment link.
+- **Reporting/Reconciliation:** Providing more detailed data for reporting and reconciliation purposes within the Fat Zebra system.
+- **Level 2/3 Data:** For B2B transactions, uploaded invoice line items might contribute to Level 2 or Level 3 card processing data, which can sometimes result in lower interchange fees.
 
 ## Upload Specification
 
-_(Details on the upload method (API, SFTP, Dashboard?) and the required data format/schema need to be extracted from the 'Upload Specification' page)_
+_(Verify upload method and data format against official documentation)_
 
-- **Upload Method:** (Specify how invoices are uploaded).
-- **Data Format:** (Specify the format, e.g., JSON, XML, CSV).
-- **Required Fields:** (List the mandatory fields for an invoice record, e.g., `invoice_id`, `customer_id`, `amount`, `due_date`, `line_items`).
-- **Optional Fields:** (List optional fields).
-- **Schema/Example:** (Provide a JSON/XML schema or a clear example of the expected data structure).
+- **Upload Method:** Could be via:
+  - A specific API endpoint (e.g., `POST /v1.0/invoices`).
+  - SFTP upload.
+  - Manual upload in the Merchant Dashboard.
+- **Data Format:** Most likely JSON for API uploads, potentially CSV for batch/SFTP uploads.
+- **Required Fields (Example):** `invoice_id` (unique identifier), `customer_reference` (linking to a customer record), `amount` (total amount in cents), `currency` (ISO code), `issue_date`, `due_date`.
+- **Optional Fields (Example):** `status` (e.g., `open`, `paid`, `overdue`), `line_items` (array of objects with description, quantity, unit_price, total), `tax_amount`, `shipping_amount`, `notes`, `metadata`.
+- **Schema/Example:** The example below shows a plausible JSON structure.
 
 ```json
 // Example Invoice Data (Illustrative - confirm actual structure)
@@ -49,7 +57,23 @@ _(Details on the upload method (API, SFTP, Dashboard?) and the required data for
 
 ## Linking to Transactions
 
-_(Explain how uploaded invoices might be linked or referenced during payment processing, if applicable)_
+_(Verify linking mechanism against official documentation)_
+
+If used for payment linking, you might reference the `invoice_id` within the `metadata` or a dedicated `invoice_reference` field when creating a [Purchase](./purchases.md) or other transaction.
+
+```json
+// Example Purchase request linking to an invoice
+{
+  // ... other purchase details (amount, card info, etc.) ...
+  "reference": "PAYMENT-FOR-INV-12345",
+  "metadata": {
+    "invoice_id": "INV-12345",
+    "customer_internal_ref": "CUST-001"
+  }
+}
+```
+
+Alternatively, if Fat Zebra hosts the invoice with a payment button, paying via that link would automatically associate the payment.
 
 ---
 

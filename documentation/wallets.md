@@ -4,47 +4,88 @@ This section covers integration with digital wallets like Apple Pay and Google P
 
 ## Apple Pay `[WALLET:APPLE_PAY]`
 
-_(Details specific to Apple Pay integration need to be extracted from the 'Apple Pay' sub-pages)_
+_(Verify details against official Fat Zebra Apple Pay documentation)_
+
+Integrates Apple Pay for payments on websites (Safari) and within iOS apps.
 
 ### Onboarding
 
-- **Process:** _(Summarize the steps described in 'Apple Pay Onboarding via Merchant Dashboard')_ Likely involves configuration within the Fat Zebra Merchant Dashboard and potentially certificate signing requests (CSRs).
+- **Process:** Requires setup in both your Apple Developer account and the Fat Zebra Merchant Dashboard.
+  1.  **Apple:** Register Merchant IDs, configure payment processing certificates (CSR needed from FZ), and domain verification.
+  2.  **Fat Zebra:** Upload certificates obtained from Apple, configure Merchant ID details.
 
 ### Certificate Renewal
 
-- **Process:** _(Summarize steps from 'Apple Pay (app) Certificate Renewal')_ Explain how to renew expiring Apple Pay certificates.
+- **Process:** Apple Pay certificates expire. You need to generate a new CSR via Fat Zebra, use it to issue a new certificate in your Apple Developer account, and upload the new certificate back to Fat Zebra before the old one expires.
 
 ### Get Apple Pay Session `[API_ENDPOINT:/apple_pay/session]`
 
-- **Purpose:** An Apple Pay session must typically be requested from Fat Zebra before displaying the Apple Pay button on the web.
-- **API Endpoint:** _(Confirm endpoint path, e.g., `POST /v1.0/apple_pay/sessions`)_.
-- **Request Payload:** _(Detail required fields, e.g., validation URL provided by Apple)_.
-- **Response Payload:** _(Detail the session object returned by Fat Zebra to be passed to Apple's SDK)_.
+- **Purpose:** For web integrations, before presenting the Apple Pay button, your server must get a valid session object from Fat Zebra by validating your merchant identity with Apple.
+- **API Endpoint:** `POST /v1.0/apple_pay/sessions` (Example, confirm path)
+- **Request Payload:** Contains the `validationURL` received from the Apple Pay JS API `onvalidatemerchant` event.
+  ```json
+  {
+    "merchant_validation_url": "(URL from Apple Pay JS)",
+    "display_name": "Your Store Name", // Optional: Your store name
+    "domain_name": "yourstore.com" // Optional: Verified domain
+  }
+  ```
+- **Response Payload:** Contains the session object to be passed back to the Apple Pay JS `completeMerchantValidation` method.
+  ```json
+  {
+    // Opaque session object from Apple/Fat Zebra
+    ...
+  }
+  ```
+
+### Processing Payments (Web/JS)
+
+1.  **Initiate:** User clicks Apple Pay button.
+2.  **Validate Merchant:** `onvalidatemerchant` event -> Call FZ Get Session API -> `completeMerchantValidation`.
+3.  **Authorize Payment:** `onpaymentauthorized` event provides an `ApplePayPaymentToken`.
+4.  **Send to Server:** Send this token to your server.
+5.  **Process with Fat Zebra:** Your server sends the token data (within a specific field, e.g., `apple_pay_token` or nested object) to the Fat Zebra [Purchase](./purchases.md) API endpoint instead of raw card details.
 
 ### Recurring & Installment Transactions
 
-- **Process:** _(Explain how Apple Pay can be used for recurring/installment payments, likely involves tokenizing the Apple Pay payment data - see 'Recurring & Installment Transactions' page)_.
+- **Process:** Usually involves performing an initial Apple Pay transaction and then using the `card.token` returned in the Fat Zebra purchase response for subsequent [Merchant Initiated Transactions](./card-on-file.md#merchant-initiated-transaction-mit).
 
 ## Google Pay™ `[WALLET:GOOGLE_PAY]`
 
-_(Details specific to Google Pay integration need to be extracted from the 'Google Pay' sub-pages)_
+_(Verify details against official Fat Zebra Google Pay documentation)_
+
+Integrates Google Pay for payments on websites and within Android apps.
 
 ### Integration Methods
 
-Fat Zebra supports multiple Google Pay integration methods:
-
-- **Android App Integration:** _(Summarize key steps/considerations for integrating within a native Android app)_.
-- **Web Integration:** _(Summarize key steps/considerations for web integration, likely involving Google's JS library and passing payment data to Fat Zebra)_.
-- **Hosted Payments Page Integration:** _(Explain how Google Pay works with Fat Zebra's hosted payment page solution)_.
+- **Android App Integration:** Use Google's Google Pay Android SDK. Configure allowed payment methods to include `CARD` with Fat Zebra as the gateway and provide your FZ gateway merchant ID.
+- **Web Integration:** Use Google's Google Pay JavaScript library. Configure Fat Zebra as the gateway. The JS library returns an encrypted `PaymentData` object upon successful user authorization.
+- **Hosted Payments Page Integration:** If using Fat Zebra's HPP, Google Pay may appear as a payment option automatically if configured correctly in the dashboard.
 
 ### Google Pay Merchant ID
 
-- **Requirement:** _(Explain the need for a Google Pay Merchant ID and potentially how to obtain/configure it)_.
+- **Requirement:** You need your Fat Zebra **Gateway Merchant ID** (this is distinct from your Google Pay Merchant ID obtained from Google for direct integrations) to configure the Google Pay integration.
 
 ### Processing Google Pay Payments
 
-- **Data Flow:** _(Describe how the encrypted payment data from Google Pay is passed to the Fat Zebra API (e.g., Purchases endpoint) for processing)_.
-- **API Request:** _(Show an example snippet of a Fat Zebra API request containing Google Pay data)_.
+- **Data Flow:** The encrypted `PaymentData` obtained from the Google Pay API (web or Android) needs to be sent to your server.
+- **API Request:** Your server sends this data to the Fat Zebra [Purchase](./purchases.md) API endpoint. The `PaymentData` object (often Base64 encoded) is typically included in a specific field, e.g., `google_pay_token` or a nested `google_pay` object.
+  ```json
+  // Example Purchase request with Google Pay data (Confirm actual fields)
+  {
+    "amount": 3000,
+    "currency": "AUD",
+    "reference": "ORDER-GPAY-456",
+    "customer_ip": "192.168.1.101",
+    "payment_method": {
+      "google_pay": {
+        "token": "(Base64 encoded PaymentData JSON from Google Pay API)"
+      }
+    }
+    // OR potentially "google_pay_token": "(Base64 encoded PaymentData...)"
+  }
+  ```
+- **Tokenization:** Similar to Apple Pay, a successful Google Pay purchase via Fat Zebra usually returns a standard `card.token` in the response, which can be used for [Recurring Payments](./card-on-file.md#recurring--installment-payments) / [MIT](./card-on-file.md#merchant-initiated-transaction-mit).
 
 ---
 

@@ -4,41 +4,44 @@ This section provides resources for testing your Fat Zebra integration, primaril
 
 ## Test Card Numbers
 
-_(Specific test card numbers and their expected outcomes need to be extracted from the 'Test Card Numbers' page)_
+_(Specific test card numbers and their expected outcomes should be verified against the official 'Test Card Numbers' page)_
 
-Use the following card numbers in the **Sandbox Environment** (`[API_ENDPOINT]`) to simulate different responses.
+Use the following card numbers in the **Sandbox Environment** (`[API_ENDPOINT]`) to simulate different responses. These are common test card patterns; Fat Zebra may have specific numbers for certain scenarios.
 
 **Successful Transactions:**
 
-- Visa: `(Number needed)`
-- Mastercard: `(Number needed)`
-- AMEX: `(Number needed)`
-- _(Add other card types if listed)_
+- Visa: `4111111111111111` (or `400000...` series)
+- Mastercard: `5100000000000000` (or `51-55...` series)
+- AMEX: `370000000000000` (or `34...`, `37...` series)
+- Discover: `6011000000000000`
+- JCB: `3500000000000000`
+- Diners Club: `36000000000000`
 
-**Declined Transactions:**
+**Declined Transactions (Common Examples):**
 
-- Generic Decline: `(Number needed)`
-- Insufficient Funds: `(Number needed)`
-- Expired Card: `(Number needed)`
-- Invalid CVV: `(Number needed)`
-- _(Add other decline scenarios if listed)_
+- Generic Decline: Use a card number known to decline (e.g., ending in `...0005`, `...1004` - _check FZ docs_)
+- Insufficient Funds: Use a card number known for this (e.g., ending in `...0031` - _check FZ docs_)
+- Expired Card: Use any valid test card number with an expiry date in the past.
+- Invalid CVV: Use a valid test card number and expiry, but an incorrect CVV format or a CVV known to fail (e.g., `999` - _check FZ docs_).
+- Invalid Card Number: Use a number that fails Luhn validation or is not a valid scheme prefix.
 
 **3D Secure Simulation:**
 
-- _(Details on simulating 3DS success, failure, or challenges need to be extracted - See also: [3DS2 Integration](./3ds2.md#3ds-cards-for-testing))_
-  - Card requiring challenge: `(Number needed)`
-  - Card resulting in frictionless success: `(Number needed)`
-  - Card resulting in failure: `(Number needed)`
+- _(Specific card numbers are usually required to trigger 3DS flows - Check FZ '3DS Cards for Testing' page. See also: [3DS2 Integration](./3ds2.md#3ds-cards-for-testing))_
+  - Card requiring challenge: `(Specific Visa/MC number needed)`
+  - Card resulting in frictionless success: `(Specific Visa/MC number needed)`
+  - Card resulting in failure: `(Specific Visa/MC number needed)`
 
 **AVS Simulation:**
 
-- _(Details on simulating AVS matches/mismatches need to be extracted - See also: [Purchases](./purchases.md#avs))_
-  - Card with AVS mismatch: `(Number needed)`
-  - Card with AVS match: `(Number needed)`
+- _(Requires specific address details submitted along with test cards - Check FZ 'AVS' page. See also: [Purchases](./purchases.md#avs))_
+  - Card/Address for Full Match: `(Number + Address needed)`
+  - Card/Address for Partial Match (Zip): `(Number + Address needed)`
+  - Card/Address for No Match: `(Number + Address needed)`
 
 **Other Scenarios:**
 
-- _(Add any other specific test cards mentioned, e.g., for specific currencies, card-on-file tests)_
+- _(Check FZ docs for cards related to specific currencies, velocity limits, etc.)_
 
 **General Test Card Parameters:**
 
