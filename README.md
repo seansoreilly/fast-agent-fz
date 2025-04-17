@@ -21,7 +21,7 @@ This project implements an AI agent using the Fast Agent framework, specifically
 
 ## Prerequisites
 
-- Python 3.x
+- Python 3.12.7 or higher
 - Node.js (for some dependencies)
 - Git
 
@@ -46,21 +46,30 @@ The project relies on several Python packages:
 
 ## Installation
 
-1. Clone the repository
-2. Create and activate a virtual environment:
+1. Ensure you have Python 3.12.7 installed:
+
+   ```bash
+   python --version
+   ```
+
+   If needed, download from [python.org](https://www.python.org/downloads/) or use a version manager like pyenv.
+
+2. Clone the repository
+
+3. Create and activate a virtual environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
-3. Install Python dependencies:
+4. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. Install Node.js dependencies:
+5. Install Node.js dependencies:
    ```bash
    npm install
    ```
-5. Install Gradio UI dependencies:
+6. Install Gradio UI dependencies:
 
    ```bash
    # On Windows

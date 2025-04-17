@@ -23,7 +23,7 @@ class AgentState:
 
 agent_state = AgentState()
 
-async def chat_interface(message):
+async def chat_interface(message,history):
     """Process messages through the Fat Zebra agent."""
     # Initialize the agent if needed
     if agent_state.agent is None:

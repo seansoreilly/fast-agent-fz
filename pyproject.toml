@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fast-agent-fz"
+version = "0.1.0"
+description = "Fat Zebra AI agent implementation using Fast Agent MCP framework"
+readme = "README.md"
+requires-python = ">=3.12.7"
+license = { text = "MIT" }
+dependencies = [
+    "anthropic>=0.5.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+    "pyyaml>=6.0",
+    "jinja2>=3.1.2",
+    "aiohttp>=3.8.5",
+    "websockets>=11.0.3",
+    "gradio>=4.13.0",
+    "fast-agent-mcp @ git+https://github.com/evalstate/fast-agent.git",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+]
+
+[tool.setuptools]
+packages = ["fast-agent-fz"] 
