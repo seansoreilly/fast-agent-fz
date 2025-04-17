@@ -34,10 +34,11 @@ async def chat_interface(message, history):
     return response
 
 # Create the Gradio interface
-ginterface = gr.ChatInterface(
+demo = gr.ChatInterface(
     fn=chat_interface,
     title="Fat Zebra AI Assistant",
     description="Ask me anything about Fat Zebra payments, transactions, or API usage.",
+    type="messages",
     theme="soft",
     examples=[
         "Do a test payment and explain it?",
@@ -48,7 +49,7 @@ ginterface = gr.ChatInterface(
 )
 
 if __name__ == "__main__":
-    ginterface.launch(
+    demo.launch(
         server_name="0.0.0.0",
         server_port=7860,
         pwa=True,
