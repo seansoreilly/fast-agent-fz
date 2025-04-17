@@ -24,13 +24,24 @@ async def generate_response(agent, message):
     return response
 
 # Define the agent
-@fast.agent(instruction="Assist with any queries regarding the Fat Zebra API", servers=["fatzebra"])
+@fast.agent(instruction="Assist with any queries regarding the Fat Zebra API", servers=["fatzebra"], use_history=True)
 async def main():
     """Run the Fat Zebra AI agent in an async context."""
     # use the --model command line switch or agent arguments to change model
     async with fast.run() as agent:
+        # Create a sync wrapper for the async generate_response function
+        def sync_generate_response(message):
+            """Synchronous wrapper for the async generate_response function."""
+            # Create a new event loop for this thread
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            # Run the async function and return its result
+            result = loop.run_until_complete(generate_response(agent, message))
+            loop.close()
+            return result
+            
         # Add the generate_response method to the agent
-        agent.generate_response = lambda message: generate_response(agent, message)
+        agent.generate_response = sync_generate_response
         
         # Load all markdown files from documentation directory
         doc_path = r"documentation"

@@ -14,11 +14,13 @@ async def process_message(message, history):
         return response
 
 # Create the Gradio interface
-demo = gr.ChatInterface(
+ginterface = gr.ChatInterface(
     fn=process_message,
     title="Fat Zebra AI Assistant",
     description="Ask me anything about Fat Zebra payments, transactions, or API usage.",
     theme="soft",
+    type="messages",
+    save_history=True,
     examples=[
         "Do a test payment and explain it?",
         "What's the process for issuing a refund?",
@@ -27,8 +29,11 @@ demo = gr.ChatInterface(
     ]
 )
 
+ginterface.save_history = True
+ginterface.saved_conversations = "abcdefasd6200683922"
+
 if __name__ == "__main__":
-    demo.launch(
+    ginterface.launch(
         server_name="0.0.0.0",
         server_port=7860,
         pwa=True,
