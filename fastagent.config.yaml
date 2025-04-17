@@ -9,6 +9,11 @@ logger:
   level: error
   truncate_tools: true
 
+# Default model configuration
+model:
+  provider: openai
+  name: gpt-4o
+
 mcp:
   servers:
     filesystem:

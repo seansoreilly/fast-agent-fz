@@ -35,3 +35,10 @@ ENV/
 .vscode/
 *.swp
 *.swo
+
+node_modules/
+mcp-server/
+app/
+.gradio/
+fastagent.jsonl
+fastagent.secrets.yaml

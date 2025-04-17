@@ -15,12 +15,13 @@ This project implements an AI agent using the Fast Agent framework, specifically
 ├── requirements.txt      # Python dependencies
 ├── templates/           # Template directory
 ├── logs/               # Log files directory
+├── gradio_app.py       # Gradio UI implementation (coming soon)
 └── .venv/              # Python virtual environment
 ```
 
 ## Prerequisites
 
-- Python 3.x
+- Python 3.12.7 or higher
 - Node.js (for some dependencies)
 - Git
 
@@ -40,23 +41,42 @@ The project relies on several Python packages:
 - jinja2 >= 3.1.2
 - aiohttp >= 3.8.5
 - websockets >= 11.0.3
+- gradio >= 4.13.0
 - fast-agent-mcp (from GitHub)
 
 ## Installation
 
-1. Clone the repository
-2. Create and activate a virtual environment:
+1. Ensure you have Python 3.12.7 installed:
+
+   ```bash
+   python --version
+   ```
+
+   If needed, download from [python.org](https://www.python.org/downloads/) or use a version manager like pyenv.
+
+2. Clone the repository
+
+3. Create and activate a virtual environment:
    ```bash
    python -m venv .venv
    source .venv/bin/activate  # On Windows: .venv\Scripts\activate
    ```
-3. Install Python dependencies:
+4. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
-4. Install Node.js dependencies:
+5. Install Node.js dependencies:
    ```bash
    npm install
+   ```
+6. Install Gradio UI dependencies:
+
+   ```bash
+   # On Windows
+   .\install_gradio.ps1
+
+   # On Unix-based systems
+   ./install_gradio.sh
    ```
 
 ## Configuration
@@ -68,13 +88,25 @@ The project uses two configuration files:
 
 ## Usage
 
-To run the agent:
+### Terminal-based Agent
+
+To run the agent in the terminal:
 
 ```bash
 python agent.py
 ```
 
 You can modify the model using the `--model` command line switch or through agent arguments.
+
+### Gradio UI (Coming Soon)
+
+To run the agent with the Gradio web interface:
+
+```bash
+python gradio_app.py
+```
+
+This will start a web server at http://localhost:7860 where you can interact with the agent through a user-friendly chat interface.
 
 ## Development
 
@@ -83,6 +115,8 @@ The main agent logic is in `agent.py`. The agent is configured to work with:
 - Fetch server
 - Filesystem server
 - Fat Zebra server
+
+Gradio UI implementation is in progress and will provide a more user-friendly interface for interacting with the agent.
 
 ## Security
 
