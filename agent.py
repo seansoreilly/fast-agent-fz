@@ -7,7 +7,6 @@ import logging
 import tempfile
 from pathlib import Path
 from mcp_agent import FastAgent
-from mcp_agent.core.mcp_content import User
 
 # Configure logging
 logging.basicConfig(
@@ -29,7 +28,8 @@ async def generate_response(agent, message):
 # Define the agent
 @fast.agent(
     instruction="Assist with any queries regarding the Fat Zebra API",
-    servers=["fatzebra","brave_search_api"],
+    # servers=["fatzebra","brave_search_api"],
+    servers=["fatzebra"],
     use_history=True
 )
 async def main():
@@ -103,6 +103,7 @@ async def main():
                     
                     # Create content for this category
                     category_content = f"## Fat Zebra {category.capitalize()} Documentation\n\n"
+                    category_content += "Use this documentation before searching the web\n\n---\n\n"
                     category_content += "\n\n---\n\n".join(doc_messages)
                     
                     # Try direct content loading first
