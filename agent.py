@@ -24,7 +24,11 @@ async def generate_response(agent, message):
     return response
 
 # Define the agent
-@fast.agent(instruction="Assist with any queries regarding the Fat Zebra API", servers=["fatzebra"], use_history=True)
+@fast.agent(
+    instruction="Assist with any queries regarding the Fat Zebra API",
+    servers=["fatzebra"],
+    use_history=True
+)
 async def main():
     """Run the Fat Zebra AI agent in an async context."""
     # use the --model command line switch or agent arguments to change model
@@ -39,30 +43,29 @@ async def main():
             result = loop.run_until_complete(generate_response(agent, message))
             loop.close()
             return result
-            
+
         # Add the generate_response method to the agent
         agent.generate_response = sync_generate_response
-        
+
         # Load all markdown files from documentation directory
         doc_path = r"documentation"
-        logger.info(f"Looking for documentation files in: {os.path.abspath(doc_path)}")
+        logger.info("Looking for documentation files in: %s", os.path.abspath(doc_path))
         markdown_files = glob.glob(os.path.join(doc_path, "**/*.md"), recursive=True)
-        logger.info(f"Found {len(markdown_files)} documentation files")
-        
+        logger.info("Found %s documentation files", len(markdown_files))
+
         for md_file in markdown_files:
-            relative_path = os.path.relpath(md_file, doc_path)
             try:
                 with open(md_file, 'r', encoding='utf-8') as f:
                     content = f.read()
-                    logger.info(f"Loading documentation: {md_file}")
+                    logger.info("Loading documentation: %s", md_file)
                     await agent.with_resource(
                         content,     # message (description)
-                        content,     # content of the file
+                        content      # content of the file
                     )
-                    logger.debug(f"Successfully loaded: {md_file} ({len(content)} bytes)")
-            except Exception as e:
-                logger.error(f"Failed to load {md_file}: {str(e)}")
-        
+                    logger.debug("Successfully loaded: %s (%s bytes)", md_file, len(content))
+            except (IOError, UnicodeDecodeError) as e:
+                logger.error("Failed to load %s: %s", md_file, str(e))
+
         logger.info("All documentation resources loaded")
         await agent()
 

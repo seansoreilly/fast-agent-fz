@@ -1,8 +1,9 @@
-import gradio as gr
-import asyncio
-from agent import fast, generate_response
+"""Gradio web interface for the Fat Zebra AI Assistant."""
+
 import os
 import logging
+import gradio as gr
+from agent import fast, generate_response
 
 # Configure logging
 logging.basicConfig(
@@ -14,23 +15,25 @@ logger = logging.getLogger("gradio-app")
 # Ensure the static directory exists
 os.makedirs("static", exist_ok=True)
 
-# Global persistent agent
-persistent_agent = None
+# Agent state manager
+class AgentState:
+    """Maintains the state of the Fat Zebra agent across chat requests."""
+    def __init__(self):
+        self.agent = None
 
-async def chat_interface(message, history):
+agent_state = AgentState()
+
+async def chat_interface(message):
     """Process messages through the Fat Zebra agent."""
-    global persistent_agent
-    
     # Initialize the agent if needed
-    if persistent_agent is None:
+    if agent_state.agent is None:
         logger.info("Initializing persistent agent")
-        # Create a new context each time for the first message
-        context_manager = fast.run()
-        agent = await context_manager.__aenter__()
-        persistent_agent = agent
-        
+        # Create the context using async with
+        async with fast.run() as agent:
+            agent_state.agent = agent
+
     # Use the existing generate_response function
-    response = await generate_response(persistent_agent, message)
+    response = await generate_response(agent_state.agent, message)
     return response
 
 # Create the Gradio interface
