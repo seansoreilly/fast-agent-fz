@@ -2,25 +2,43 @@ import gradio as gr
 import asyncio
 from agent import fast, generate_response
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger("gradio-app")
 
 # Ensure the static directory exists
 os.makedirs("static", exist_ok=True)
 
-async def process_message(message, history):
-    """Process a user message through the Fat Zebra agent."""
-    async with fast.run() as agent:
-        # Pass the message to the agent and get the response
-        response = await generate_response(agent, message)
-        return response
+# Global persistent agent
+persistent_agent = None
+
+async def chat_interface(message, history):
+    """Process messages through the Fat Zebra agent."""
+    global persistent_agent
+    
+    # Initialize the agent if needed
+    if persistent_agent is None:
+        logger.info("Initializing persistent agent")
+        # Create a new context each time for the first message
+        context_manager = fast.run()
+        agent = await context_manager.__aenter__()
+        persistent_agent = agent
+        
+    # Use the existing generate_response function
+    response = await generate_response(persistent_agent, message)
+    return response
 
 # Create the Gradio interface
 ginterface = gr.ChatInterface(
-    fn=process_message,
+    fn=chat_interface,
     title="Fat Zebra AI Assistant",
     description="Ask me anything about Fat Zebra payments, transactions, or API usage.",
     theme="soft",
-    type="messages",
-    save_history=True,
     examples=[
         "Do a test payment and explain it?",
         "What's the process for issuing a refund?",
@@ -28,9 +46,6 @@ ginterface = gr.ChatInterface(
         "What are the parameters for a direct debit payment?"
     ]
 )
-
-ginterface.save_history = True
-ginterface.saved_conversations = "abcdefasd6200683922"
 
 if __name__ == "__main__":
     ginterface.launch(
