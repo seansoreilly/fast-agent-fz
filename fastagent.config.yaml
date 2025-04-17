@@ -29,7 +29,7 @@ mcp:
       args: ["mcp-server-fetch"]
     fatzebra:
       command: "node"
-      # use this when integrating with fast-agent
-      # args: ["mcp-fat-zebra/dist/index.js"]
-      # use this for local development
       args: ["../mcp-fat-zebra/dist/index.js"]
+    brave_search_api:
+      command: "npx"
+      args: ["@modelcontextprotocol/server-brave-search"]

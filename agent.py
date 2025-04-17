@@ -26,7 +26,7 @@ async def generate_response(agent, message):
 # Define the agent
 @fast.agent(
     instruction="Assist with any queries regarding the Fat Zebra API",
-    servers=["fatzebra"],
+    servers=["fatzebra","brave_search_api"],
     use_history=True
 )
 async def main():
@@ -58,11 +58,15 @@ async def main():
                 with open(md_file, 'r', encoding='utf-8') as f:
                     content = f.read()
                     logger.info("Loading documentation: %s", md_file)
-                    await agent.with_resource(
-                        content,     # message (description)
-                        content      # content of the file
-                    )
-                    logger.debug("Successfully loaded: %s (%s bytes)", md_file, len(content))
+                    try:
+                        await agent.with_resource(
+                            content,     # message (description)
+                            content      # content of the file
+                        )
+                        logger.debug("Successfully loaded: %s (%s bytes)", md_file, len(content))
+                    except ValueError as e:
+                        logger.warning("Could not load resource %s: %s", md_file, str(e))
+                        # Continue with other files
             except (IOError, UnicodeDecodeError) as e:
                 logger.error("Failed to load %s: %s", md_file, str(e))
 
