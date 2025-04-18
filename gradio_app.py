@@ -60,7 +60,7 @@ with gr.Blocks(theme=fz_theme, css=open("static/fz_skin/custom.css", encoding="u
     chatbot = gr.ChatInterface(
         fn=chat_interface,
         title="",
-        description="Ask me anything about Fat Zebra payments, transactions, or API usage.",
+        description="Get help with Fat Zebra API integration, payment processing, and putting payments through the Fat Zebra API.",
         examples=[
             "Do a test payment and explain it?",
             "What's the process for issuing a refund?",
