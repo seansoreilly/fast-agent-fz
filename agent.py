@@ -25,7 +25,6 @@ async def generate_response(agent, message):
     response = await agent.send(message)
     return response
 
-# Define the agent
 @fast.agent(
     instruction="Assist with any queries regarding the Fat Zebra API",
     # servers=["fatzebra","brave_search_api"],

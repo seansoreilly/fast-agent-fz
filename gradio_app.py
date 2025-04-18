@@ -4,16 +4,22 @@ import os
 import logging
 import gradio as gr
 from agent import fast, generate_response
+from gradio.themes.base import Base
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger("gradio-app")
 
-# Ensure the static directory exists
 os.makedirs("static", exist_ok=True)
+
+# Fat Zebra theme based on branding
+fz_theme = gr.themes.Default(
+    primary_hue="blue",
+    secondary_hue="gray",
+    font=["Open Sans", "Montserrat", "Fira Sans", "Roboto", "sans-serif"]
+)
 
 # Agent state manager
 class AgentState:
@@ -42,7 +48,8 @@ demo = gr.ChatInterface(
     title="Fat Zebra AI Assistant",
     description="Ask me anything about Fat Zebra payments, transactions, or API usage.",
     type="messages",
-    theme="soft",
+    theme=fz_theme,
+    css=open("static/fz_skin/custom.css").read(),
     examples=[
         "Do a test payment and explain it?",
         "What's the process for issuing a refund?",
