@@ -56,6 +56,17 @@ with gr.Blocks(theme=fz_theme, css=open("static/fz_skin/custom.css", encoding="u
             container=False,
             elem_id="header-image"
         )
+    with gr.Row(elem_classes="info-container"):
+        gr.HTML("""
+            <center><div class="info-banner" style="text-align: center;">
+                <svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" focusable=\"false\" style=\"margin-right:0.5em; vertical-align: middle;\">
+                  <circle cx=\"10\" cy=\"10\" r=\"9\" stroke=\"#0066ff\" stroke-width=\"2\" fill=\"#eaf3ff\"/>
+                  <rect x=\"9\" y=\"8\" width=\"2\" height=\"6\" rx=\"1\" fill=\"#0066ff\"/>
+                  <rect x=\"9\" y=\"5\" width=\"2\" height=\"2\" rx=\"1\" fill=\"#0066ff\"/>
+                </svg>
+                <span style="vertical-align: middle;">This website is a proof of concept only and is not provided or endorsed by Fat Zebra.</span>
+            </div></center>
+        """)
 
     chatbot = gr.ChatInterface(
         fn=chat_interface,
@@ -72,7 +83,7 @@ with gr.Blocks(theme=fz_theme, css=open("static/fz_skin/custom.css", encoding="u
 if __name__ == "__main__":
     demo.launch(
         server_name="0.0.0.0",
-        server_port=7861,
+        server_port=7860,
         pwa=True,
         show_error=True,
         share=True,

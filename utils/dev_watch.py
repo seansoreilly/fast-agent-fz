@@ -1,5 +1,4 @@
 import subprocess
-import time
 from watchfiles import watch
 
 WATCH_PATH = r"C:\projects\fast-agent-fz"
