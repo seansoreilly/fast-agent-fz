@@ -1,20 +1,40 @@
 /* Fat Zebra Custom CSS */
 .gradio-container {
-    /* font-family: 'Inter', sans-serif; */
     font-family: 'Mont Blanc', Arial, sans-serif;
+    background: #f7fafd;
+    min-height: 100vh;
+    padding: 32px 0;
 }
 
 .dark .gradio-container {
     background-color: #0b1229;
 }
 
+/* Card-like container for main sections */
+.card-container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0, 102, 255, 0.07), 0 1.5px 6px rgba(0,0,0,0.03);
+    padding: 2rem 2.5rem;
+    margin: 0 auto 2rem auto;
+    max-width: 800px;
+}
+
+@media (max-width: 700px) {
+    .card-container {
+        padding: 1rem 0.5rem;
+    }
+}
+
 /* Header styling */
 .header-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
     background-color: #ffffff;
-    padding: 1rem 0;
+    padding: 1.5rem 0 1rem 0;
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 2px 10px rgba(0, 102, 255, 0.04);
 }
 
 #header-image {
@@ -22,36 +42,51 @@
     width: auto;
     height: auto;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
 }
 
 /* Chat message styling */
 .message.user {
-    background-color: #f2f7ff;
-    border-radius: 8px;
-    padding: 8px 12px;
-    margin-bottom: 10px;
+    background-color: #eaf3ff;
+    border-radius: 12px 12px 8px 12px;
+    padding: 12px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,102,255,0.04);
+    font-size: 1.05rem;
 }
 
 .message.bot {
-    background-color: #eef2f7;
-    border-radius: 8px;
-    padding: 8px 12px;
-    margin-bottom: 10px;
+    background-color: #f7fafd;
+    border-radius: 12px 12px 12px 8px;
+    padding: 12px 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 4px rgba(0,102,255,0.03);
+    font-size: 1.05rem;
 }
 
 /* Button styling */
 button.primary {
-    background-color: #0066ff;
+    background: linear-gradient(90deg, #0066ff 0%, #3a8dff 100%);
     color: white;
-    border-radius: 4px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.08rem;
+    padding: 10px 28px;
+    border: none;
+    transition: all 0.2s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0px 2px 8px rgba(0, 102, 255, 0.08);
+    letter-spacing: 0.01em;
 }
 
 button.primary:hover {
-    background-color: #0052cc;
-    transform: translateY(-1px);
+    background: linear-gradient(90deg, #0052cc 0%, #2b6cb0 100%);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0px 4px 16px rgba(0, 102, 255, 0.13);
+}
+
+button.primary:active {
+    background: linear-gradient(90deg, #0041a8 0%, #1a4d80 100%);
+    transform: scale(0.98);
 }
 
 button.primary.loading {
@@ -80,16 +115,21 @@ button.primary.loading::after {
 }
 
 /* Text input styling */
-input[type="text"] {
-    border-radius: 4px;
-    border: 1px solid #e0e0e0;
-    padding: 8px 12px;
-    transition: border-color 0.3s ease;
+input[type="text"], textarea, input[type="search"] {
+    border-radius: 8px;
+    border: 1.5px solid #d0e2ff;
+    padding: 10px 16px;
+    font-size: 1.05rem;
+    background: #f7fafd;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,102,255,0.03);
+    margin-bottom: 0.5rem;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, textarea:focus, input[type="search"]:focus {
     border-color: #0066ff;
     outline: none;
+    box-shadow: 0 0 0 2px #b3c6e6;
 }
 
 /* Loading animation container */
@@ -97,7 +137,7 @@ input[type="text"]:focus {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0;
+    margin: 24px 0;
 }
 
 /* Zebra Send Button Styles - Updated for better animation */
@@ -105,17 +145,18 @@ input[type="text"]:focus {
     position: relative;
     width: 100%;
     min-width: 120px;
-    height: 40px;
-    background: #0066ff;
+    height: 44px;
+    background: linear-gradient(90deg, #0066ff 0%, #3a8dff 100%);
     border: none;
-    border-radius: 20px;
+    border-radius: 22px;
     cursor: pointer;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     transition: background 0.3s;
-    padding: 0 15px;
+    padding: 0 18px;
+    box-shadow: 0 2px 8px rgba(0,102,255,0.09);
 }
 
 .zebra-send-btn:disabled {
@@ -162,11 +203,12 @@ input[type="text"]:focus {
 
 .zebra-send-label {
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     margin-left: 44px;
     z-index: 1;
-    font-size: 1rem;
+    font-size: 1.08rem;
     pointer-events: none;
+    letter-spacing: 0.01em;
 }
 
 /* Optional: Add a trail effect behind the running zebra */
@@ -193,7 +235,7 @@ input[type="text"]:focus {
 .info-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .info-banner {
@@ -201,13 +243,13 @@ input[type="text"]:focus {
     align-items: center;
     background: linear-gradient(90deg, #eaf3ff 0%, #f7fafd 100%);
     color: #1a237e;
-    border: 1px solid #b3c6e6;
-    border-radius: 8px;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.05);
-    gap: 0.75rem;
+    border: 1.5px solid #b3c6e6;
+    border-radius: 12px;
+    padding: 1rem 2rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.07);
+    gap: 1rem;
     max-width: 700px;
 }
 
@@ -219,7 +261,7 @@ input[type="text"]:focus {
 
 @media (max-width: 600px) {
     .info-banner {
-        font-size: 0.95rem;
-        padding: 0.5rem 0.75rem;
+        font-size: 0.98rem;
+        padding: 0.7rem 0.7rem;
     }
 }
