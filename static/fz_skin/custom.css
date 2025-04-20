@@ -1,6 +1,6 @@
 /* Fat Zebra Custom CSS */
 .gradio-container {
-    font-family: 'Mont Blanc', Arial, sans-serif;
+    /* font-family: 'Mont Blanc', Arial, sans-serif; /* Removed to use theme fonts */
     background: #f7fafd;
     min-height: 100vh;
     padding: 32px 0;
@@ -31,10 +31,10 @@
     display: flex;
     justify-content: center;
     margin-bottom: 2.5rem;
-    background-color: #ffffff;
+    /* background-color: #ffffff; /* Removed for integration */
     padding: 1.5rem 0 1rem 0;
     border-radius: 18px 18px 0 0;
-    box-shadow: 0 2px 10px rgba(0, 102, 255, 0.04);
+    /* box-shadow: 0 2px 10px rgba(0, 102, 255, 0.04); /* Removed for integration */
 }
 
 #header-image {
@@ -53,15 +53,19 @@
     margin-bottom: 14px;
     box-shadow: 0 1px 4px rgba(0,102,255,0.04);
     font-size: 1.05rem;
+    color: #333; /* Added for contrast */
+    line-height: 1.5; /* Added for readability */
 }
 
 .message.bot {
-    background-color: #f7fafd;
+    background-color: #f9f9f9; /* Lightened bot background */
     border-radius: 12px 12px 12px 8px;
     padding: 12px 18px;
     margin-bottom: 14px;
     box-shadow: 0 1px 4px rgba(0,102,255,0.03);
     font-size: 1.05rem;
+    color: #333; /* Added for contrast */
+    line-height: 1.5; /* Added for readability */
 }
 
 /* Button styling */
@@ -241,14 +245,16 @@ input[type="text"]:focus, textarea:focus, input[type="search"]:focus {
 .info-banner {
     display: flex;
     align-items: center;
-    background: linear-gradient(90deg, #eaf3ff 0%, #f7fafd 100%);
+    /* background: linear-gradient(90deg, #eaf3ff 0%, #f7fafd 100%); /* Replaced with solid color */
+    background: #f0f6ff; /* Softened background */
     color: #1a237e;
-    border: 1.5px solid #b3c6e6;
+    /* border: 1.5px solid #b3c6e6; /* Replaced with lighter border */
+    border: 1.5px solid #d0e2ff; /* Lighter border */
     border-radius: 12px;
     padding: 1rem 2rem;
     font-size: 1.08rem;
     /* font-weight: 600; */
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.07);
+    /* box-shadow: 0 2px 8px rgba(0, 102, 255, 0.07); /* Removed shadow */
     gap: 1rem;
     max-width: 700px;
 }
@@ -265,3 +271,32 @@ input[type="text"]:focus, textarea:focus, input[type="search"]:focus {
         padding: 0.7rem 0.7rem;
     }
 }
+
+/* Align chat input textarea and send button (v2) */
+.gradio-container form > .group > .wrap > .relative > div:first-child { /* Targets the container holding input + button */
+    display: flex !important; /* Use !important just in case of overrides */
+    align-items: center !important; /* Force vertical centering */
+    gap: 0.5rem;
+}
+
+/* Ensure textarea takes available space and aligns */
+.gradio-container form > .group > .wrap > .relative > div:first-child > textarea {
+    flex-grow: 1;
+    margin-bottom: 0 !important; /* Remove potential bottom margin interfering with alignment */
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.submit-button {
+    margin: 0 !important; /* Reset margins forcefully */
+    padding: 6px !important; /* Slightly reduce padding if icon itself provides visual spacing */
+    display: inline-flex !important; /* Ensure button uses flex to center icon */
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+
