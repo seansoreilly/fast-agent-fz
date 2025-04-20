@@ -48,7 +48,11 @@ async def chat_interface(message, history):
     return response
 
 # Create the Gradio interface with header image
-with gr.Blocks(theme=fz_theme, css=open("static/fz_skin/custom.css", encoding="utf-8").read()) as demo:
+with gr.Blocks(
+    title="Fat Zebra AI",
+    theme=fz_theme,
+    css=open("static/fz_skin/custom.css", encoding="utf-8").read()
+) as demo:
     with gr.Row(elem_classes="header-container"):
         gr.Image(
             value="static/fz_skin/header.png",
@@ -70,7 +74,11 @@ with gr.Blocks(theme=fz_theme, css=open("static/fz_skin/custom.css", encoding="u
 
     chatbot = gr.ChatInterface(
         fn=chat_interface,
-        title="",
+        type="messages",
+        # save_history=True,
+        # multimodal=True,
+        # title="Fat Zebra AI",
+        theme="soft",
         description="Get help with Fat Zebra API integration, payment processing, and putting payments through the Fat Zebra API.",
         examples=[
             "How do I make a payment?",
@@ -89,14 +97,14 @@ if __name__ == "__main__":
         server_name="0.0.0.0",
         server_port=7860,
         pwa=True,
-        show_error=True,
-        share=True,
+        show_error=False,
+        share=False,
         show_api=False,
         favicon_path="static/5f03e4e6c8c68511212f0c40_FZ_Favicon_32x32.png",
         app_kwargs={
             "head_html": """
                 <link rel="manifest" href="/static/manifest.json">
-                <meta name="theme-color" content="#ffffff">
+                # <meta name="theme-color" content="#ffffff">
                 <link rel="apple-touch-icon" href="/static/5f03e4e6c8c68511212f0c40_FZ_Favicon_32x32.png">
             """
         }
