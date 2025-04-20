@@ -73,10 +73,14 @@ with gr.Blocks(theme=fz_theme, css=open("static/fz_skin/custom.css", encoding="u
         title="",
         description="Get help with Fat Zebra API integration, payment processing, and putting payments through the Fat Zebra API.",
         examples=[
-            "Do a test payment and explain it?",
-            "What's the process for issuing a refund?",
-            "How do I tokenize a card?",
-            "What are the parameters for a direct debit payment?"
+            "How do I make a payment?",
+            "How do I save a card for later use?",
+            "How do I use a saved card to make a payment?",
+            "How do I give a refund?",
+            "How can I check if a payment worked?",
+            "How do I see all my batch payments?",
+            "How do I look up details about a specific batch?",
+            "How do I make a custom request to Fat Zebra?"
         ]
     )
 
