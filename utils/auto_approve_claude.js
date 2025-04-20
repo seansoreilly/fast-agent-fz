@@ -1,5 +1,5 @@
 // == Auto-Allow MCP Tools in Claude Desktop Client ==
-// 
+//
 // HOW TO USE:
 // 1. Open Claude Desktop client
 // 2. Go to: Help → Enable Developer Mode
