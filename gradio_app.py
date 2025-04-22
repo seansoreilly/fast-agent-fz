@@ -81,14 +81,12 @@ with gr.Blocks(
         theme="soft",
         description="Get help with Fat Zebra API integration, payment processing, and putting payments through the Fat Zebra API.",
         examples=[
-            "How do I make a payment?",
-            "How do I save a card for later use?",
-            "How do I use a saved card to make a payment?",
-            "How do I give a refund?",
+            "Demonstrate making a payment.",
+            "Demonstrate making a refund.",
+            "Demonstrate tokenising a card.",
             "How can I check if a payment worked?",
             "How do I see all my batch payments?",
             "How do I look up details about a specific batch?",
-            "How do I make a custom request to Fat Zebra?"
         ]
     )
 
